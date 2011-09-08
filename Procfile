@@ -1,0 +1,2 @@
+web:
+receive: bin/receive
