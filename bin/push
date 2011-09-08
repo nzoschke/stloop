@@ -1,0 +1,10 @@
+#!/bin/bash -eo pipefail
+
+BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
+GIT_DIR=$(dirname $BIN_DIR)/.git
+
+unlink $GIT_DIR/hooks/pre-receive || true
+ln -s $BIN_DIR/pre-receive $GIT_DIR/hooks/pre-receive
+
+git branch -d _test || true
+git push $GIT_DIR master:_test
