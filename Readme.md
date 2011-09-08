@@ -1,3 +1,5 @@
+Part 0  -- Intro
+
 Part I  -- Story
   http://www.lhup.edu/~dsimanek/museum/themes/BaronMunch.jpg
   http://gcc.gnu.org/install/build.html
