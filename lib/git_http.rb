@@ -177,7 +177,7 @@ class GitHttp
       end
 
       # install latest hook
-      hook = File.expand_path(File.dirname(__FILE__) + "/../bin/post-receive")
+      hook = File.expand_path(File.dirname(__FILE__) + "/../bin/pre-receive")
       `cp #{hook} #{path}/hooks/`
 
       return path
