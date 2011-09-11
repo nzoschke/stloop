@@ -1,4 +1,5 @@
-#!/usr/bin/env bash -eo pipefail
+#!/usr/bin/env bash
+set -eo pipefail
 
 # -----> Heroku receiving push
 # -----> Updating alpha language packs... done
@@ -37,6 +38,17 @@ git clone /Users/noah/dev/stloop/gist-28bcc350 $TMP_DIR/lp > /dev/null
 env -i MY_RUBY_HOME=$MY_RUBY_HOME \
   $TMP_DIR/lp/bin/compile $TMP_DIR/app $TMP_DIR/cache
 
-STATUS=$?
-[ $STATUS -ne 0 ] && err Heroku push rejected, failed to compile app
-exit $STATUS
+[ $? -ne 0 ] && { err Heroku push rejected, failed to compile app; exit 1; }
+
+# release
+env -i $TMP_DIR/lp/bin/release $TMP_DIR/app > $TMP_DIR/release.yml
+
+# squash
+mksquashfs $BUILD_DIR $TMP_DIR/slug.img -all-root > /dev/null
+topic Compiled slug is $(du -h $TMP_DIR/slug.img | cut -f1-1)
+
+# push
+HEROKU_HOST=heroku.com
+HEROKU_USERNAME=noah@heroku.com
+HEROKU_PASSWORD=bbcafa4b10423fa62db4bb11d0199853
+$APP_ROOT/bin/heroku push --app herokuapp --slug $TMP_DIR/slug.img --release $TMP_DIR/release.yml
