@@ -1,2 +1,1 @@
-web: unicorn -p $PORT
-receive: bin/receive
+web: bundle exec unicorn -p $PORT
