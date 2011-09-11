@@ -1,6 +1,1 @@
 .bundle
-
-bin/rackup
-bin/slugc
-bin/unicorn
-bin/unicorn_rails
