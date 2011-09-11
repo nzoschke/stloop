@@ -178,6 +178,7 @@ class GitHttp
 
       # install latest hook
       hook = File.expand_path(File.dirname(__FILE__) + "/../bin/pre-receive")
+      `mkdir -p #{path}/hooks/`
       `cp #{hook} #{path}/hooks/`
 
       return path
