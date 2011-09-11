@@ -32,7 +32,7 @@ mkdir -p $BUILD_DIR
 git --work-tree=$BUILD_DIR checkout -f $newrev 2> /dev/null
 
 topic Updating language pack...
-git clone /Users/noah/dev/stloop/gist-28bcc350 $TMP_DIR/lp > /dev/null
+git clone git://gist.github.com/1210141.git $TMP_DIR/lp > /dev/null
 
 # compile app in a clean environment (rvm necessitates preserving MY_RUBY_HOME)
 env -i MY_RUBY_HOME=$MY_RUBY_HOME \
