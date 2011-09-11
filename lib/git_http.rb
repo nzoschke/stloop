@@ -67,7 +67,7 @@ class GitHttp
         IO.popen(command, File::RDWR) do |pipe|
           pipe.write(input)
           while !pipe.eof?
-            block = pipe.read(128) # TODO: tweak size
+            block = pipe.read(1) # TODO: tweak size?
             @res.write block        # steam it to the client
           end
         end
