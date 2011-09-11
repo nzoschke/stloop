@@ -1,4 +1,5 @@
-$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + "/lib")
+ENV["APP_ROOT"] = File.expand_path(File.dirname(__FILE__))
+$LOAD_PATH.unshift  ENV["APP_ROOT"] + "/lib"
 
 use Rack::ShowExceptions
 
