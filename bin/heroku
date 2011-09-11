@@ -3,8 +3,14 @@
 require 'heroku'
 require 'heroku/command'
 
-# monkey-patch Heroku to use vendored plugin
+# monkey-patch Heroku to read auth from env, and use vendored plugin
 module Heroku
+  class Auth
+    def get_credentials
+      [ENV["HEROKU_USERNAME"], ENV["HEROKU_PASSWORD"]]
+    end
+  end
+
   class Plugin
     def self.directory
       File.expand_path(File.dirname(__FILE__) + "/../lib")
