@@ -171,10 +171,11 @@ class GitHttp
     def get_git_dir(path)
       root = @config[:project_root] || `pwd`
       path = File.join(root, path)
-      if File.exists?(path) # TODO: check is a valid git directory
-        return path
+      if !File.exists?(path)
+        cmd = git_command "init --bare #{path}"
+        `#{cmd}`
       end
-      false
+      return path
     end
 
     def get_service_type
