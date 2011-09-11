@@ -175,6 +175,11 @@ class GitHttp
         cmd = git_command "init --bare #{path}"
         `#{cmd}`
       end
+
+      # install latest hook
+      hook = File.expand_path(File.dirname(__FILE__) + "/../bin/post-receive")
+      `cp #{hook} #{path}/hooks/`
+
       return path
     end
 
