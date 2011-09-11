@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require 'heroku'
+require 'heroku/command'
+
+# monkey-patch Heroku to use vendored plugin
+module Heroku
+  class Plugin
+    def self.directory
+      File.expand_path(File.dirname(__FILE__) + "/../lib")
+    end
+  end
+end
+
+args = ARGV.dup
+ARGV.clear
+command = args.shift.strip rescue 'help'
+
+Heroku::Command.load
+Heroku::Command.run(command, args)
