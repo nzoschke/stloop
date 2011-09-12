@@ -49,6 +49,7 @@ env -i                        \
 
 # release
 env -i $TMP_DIR/lp/bin/release $TMP_DIR/app > $TMP_DIR/release.yml
+[ -f $BUILD_DIR/Procfile ] && cat $BUILD_DIR/Procfile | sed "s/^/  /" >> $TMP_DIR/release.yml
 
 # squash
 mksquashfs $BUILD_DIR $TMP_DIR/slug.img -no-progress -all-root 2>&1 | logger -t $LOG_TAG
