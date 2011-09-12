@@ -51,7 +51,7 @@ env -i                        \
 env -i $TMP_DIR/lp/bin/release $TMP_DIR/app > $TMP_DIR/release.yml
 
 # squash
-mksquashfs $BUILD_DIR $TMP_DIR/slug.img -all-root 2>&1 | logger -t $LOG_TAG
+mksquashfs $BUILD_DIR $TMP_DIR/slug.img -no-progress -all-root 2>&1 | logger -t $LOG_TAG
 topic Compiled slug is $(du -h $TMP_DIR/slug.img | cut -f1-1)
 
 # push
