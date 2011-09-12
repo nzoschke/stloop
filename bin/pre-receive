@@ -48,7 +48,7 @@ mksquashfs $BUILD_DIR $TMP_DIR/slug.img -all-root > /dev/null
 topic Compiled slug is $(du -h $TMP_DIR/slug.img | cut -f1-1)
 
 # push
-HEROKU_HOST=heroku.com
-HEROKU_USERNAME=noah@heroku.com
-HEROKU_PASSWORD=bbcafa4b10423fa62db4bb11d0199853
+export HEROKU_HOST=heroku.com
+export HEROKU_USERNAME=noah@heroku.com
+export HEROKU_PASSWORD=bbcafa4b10423fa62db4bb11d0199853
 $APP_ROOT/bin/heroku push --app herokuapp --slug $TMP_DIR/slug.img --release $TMP_DIR/release.yml

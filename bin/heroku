@@ -7,7 +7,7 @@ require 'heroku/command'
 module Heroku
   class Auth
     def self.get_credentials
-      [ENV["HEROKU_USERNAME"], ENV["HEROKU_PASSWORD"]]
+      @credentials ||= [ENV["HEROKU_USERNAME"], ENV["HEROKU_PASSWORD"]]
     end
   end
 
