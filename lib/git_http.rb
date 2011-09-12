@@ -172,8 +172,7 @@ class GitHttp
       root = @config[:project_root] || `pwd`
       path = File.join(root, path)
       if !File.exists?(path)
-        # TODO: remote: warning: templates not found /tmp/slingshot/git/share/git-core/templates
-        cmd = git_command "init --bare #{path} 2> /dev/null"
+        cmd = git_command "init --bare #{path}"
         `#{cmd}`
       end
 
