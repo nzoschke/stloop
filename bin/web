@@ -1,0 +1,4 @@
+#!/bin/bash
+set -x
+bundle exec unicorn -p ${PORT:-8080} || \
+bundle exec rackup  -p ${PORT:-9292}
