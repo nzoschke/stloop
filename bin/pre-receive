@@ -35,8 +35,8 @@ topic Updating language pack...
 git clone git://gist.github.com/1210141.git $TMP_DIR/lp > /dev/null
 
 # compile app in a clean environment (rvm necessitates preserving MY_RUBY_HOME)
-env -i MY_RUBY_HOME=$MY_RUBY_HOME \
-  $TMP_DIR/lp/bin/compile $TMP_DIR/app $TMP_DIR/cache
+#env -i MY_RUBY_HOME=$MY_RUBY_HOME \
+$TMP_DIR/lp/bin/compile $TMP_DIR/app $TMP_DIR/cache
 
 [ $? -ne 0 ] && { err Heroku push rejected, failed to compile app; exit 1; }
 
