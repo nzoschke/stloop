@@ -6,7 +6,7 @@ require 'heroku/command'
 # monkey-patch Heroku to read auth from env, and use vendored plugin
 module Heroku
   class Auth
-    def get_credentials
+    def self.get_credentials
       [ENV["HEROKU_USERNAME"], ENV["HEROKU_PASSWORD"]]
     end
   end
