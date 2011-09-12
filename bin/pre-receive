@@ -20,6 +20,11 @@ GIT_DIR=$(pwd)
 TMP_DIR=$(mktemp -d /tmp/app.XXXXX)
 BUILD_DIR=$TMP_DIR/app
 
+export HEROKU_HOST=heroku.com
+export HEROKU_USERNAME=noah@heroku.com
+export HEROKU_PASSWORD=bbcafa4b10423fa62db4bb11d0199853
+export LOG_TAG=t.a7bd5f2b-1943-465a-8abe-6278edd204ea[slugc]
+
 topic()   { echo "----->" $*; }
 err()     { echo " !    " $*; }
 
@@ -29,13 +34,15 @@ read oldrev newrev ref
 
 topic Heroku receiving push
 mkdir -p $BUILD_DIR
-git --work-tree=$BUILD_DIR checkout -f $newrev 2> /dev/null
+git --work-tree=$BUILD_DIR checkout -f $newrev 2>&1 | logger -t $LOG_TAG
 
 topic Updating language pack...
-git clone git://gist.github.com/1210141.git $TMP_DIR/lp &> /dev/null
+git clone git://gist.github.com/1210141.git $TMP_DIR/lp 2>&1 | logger -t $LOG_TAG
 
-# compile app in a clean environment (rvm necessitates preserving MY_RUBY_HOME)
-env -i MY_RUBY_HOME=$MY_RUBY_HOME \
+# compile app in a clean environment
+env -i                        \
+  MY_RUBY_HOME=$MY_RUBY_HOME  \ # preserve to find right RVM ruby
+  LOG_TAG=$LOG_TAG            \
   $TMP_DIR/lp/bin/compile $TMP_DIR/app $TMP_DIR/cache
 
 [ $? -ne 0 ] && { err Heroku push rejected, failed to compile app; exit 1; }
@@ -44,11 +51,8 @@ env -i MY_RUBY_HOME=$MY_RUBY_HOME \
 env -i $TMP_DIR/lp/bin/release $TMP_DIR/app > $TMP_DIR/release.yml
 
 # squash
-mksquashfs $BUILD_DIR $TMP_DIR/slug.img -all-root > /dev/null
+mksquashfs $BUILD_DIR $TMP_DIR/slug.img -all-root 2>&1 | logger -t $LOG_TAG
 topic Compiled slug is $(du -h $TMP_DIR/slug.img | cut -f1-1)
 
 # push
-export HEROKU_HOST=heroku.com
-export HEROKU_USERNAME=noah@heroku.com
-export HEROKU_PASSWORD=bbcafa4b10423fa62db4bb11d0199853
 $APP_ROOT/bin/heroku push --app herokuapp --slug $TMP_DIR/slug.img --release $TMP_DIR/release.yml
