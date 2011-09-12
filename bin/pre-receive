@@ -41,7 +41,7 @@ git clone git://gist.github.com/1210141.git $TMP_DIR/lp 2>&1 | logger -t $LOG_TA
 
 # compile app in a clean environment
 env -i                        \
-  MY_RUBY_HOME=$MY_RUBY_HOME  \ # preserve to find right RVM ruby
+  MY_RUBY_HOME=$MY_RUBY_HOME  \
   LOG_TAG=$LOG_TAG            \
   $TMP_DIR/lp/bin/compile $TMP_DIR/app $TMP_DIR/cache
 
