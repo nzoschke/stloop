@@ -1,0 +1,28 @@
+.smbullets li {
+  list-style-type: none;
+}
+
+blockquote {
+  border-left: 10px solid grey;
+  padding-left: 10px;
+}
+
+.code.smaller {
+  font-size: 0.6em;
+}
+
+/*******/
+
+.small_title h1 {
+  font-size: 4.5em;
+}
+
+.small_code pre {
+  line-height: 25px;
+}
+.small_code code {
+  font-size: 25px;
+}
+
+.smaller_code pre   { line-height:  20px; }
+.smaller_code code  { font-size:    20px; }

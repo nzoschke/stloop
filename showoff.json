@@ -1,0 +1,9 @@
+{
+  "name": "Running Heroku on Heroku",
+  "sections": [
+    { "section": "sections/intro" },
+    { "section": "sections/bootstrapping" },
+    { "section": "sections/self-hosting" },
+    { "section": "sections/conclusion" }
+  ]
+}
