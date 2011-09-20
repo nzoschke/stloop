@@ -23,7 +23,7 @@ Service != computer program, but is a comparable system
 !SLIDE center
 # Heroku Self-Hosting: Easy #
 ## www.heroku.com ##
-## blog.heroku.com ##
+## devcenter.heroku.com ##
 ![Heroku Website](public.png "Heroku Website")
 
 <p class="notes">

@@ -1,5 +1,6 @@
-!SLIDE subsection smbullets none
+!SLIDE smbullets none
 # Running Heroku on Heroku #
+## <a href="https://thestrangeloop.com/">Strange Loop 2011</a> ##
 
 * Noah Zoschke
 * @nzoschke
