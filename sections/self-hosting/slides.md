@@ -1,13 +1,21 @@
+!SLIDE title-slide bullets incremental
+# Self-Hosting #
+## A computer program that produces new versions of that same program ##
+
+* Compilers
+* Kernels
+* Programming Languages
+* Revision Control Systems
+* Text Editors
+
+<p class="notes">
+FASM; Haiku; GCC; Hart/Levin Lisp in '62; PyPy; Rubinius; CoffeeScript; Git; VIM
+</p>
+
 !SLIDE title-slide bullets
 # Self-Hosting #
-
-* A computer program that produces new versions of that same program
-* Compilers, kernels, revision control software
-
-!SLIDE title-slide bullets
-# Self-Hosting #
-## Applies to services? ##
-<p class="notes">WTF MATE??</p>
+## Applicable Metaphor for Services? ##
+<p class="notes">Service != computer program, but is a comparable system</p>
 
 !SLIDE center
 # Heroku Self-Hosting: Easy #
@@ -15,12 +23,11 @@
 ## blog.heroku.com ##
 ![Heroku Website](public.png "Heroku Website")
 
-!SLIDE
+!SLIDE bullets
 # Motivations #
 * Dogfooding
 * Efficiency
-* Decrease surface area
-* Separation of concerns
+* Separation of Concerns
 
 <p class="notes">
 Used to be unified with API!
@@ -29,41 +36,53 @@ Used to be unified with API!
 !SLIDE commandline
 # Heroku Self-Hosting: Normal #
 ## addons.heroku.com ##
-## Cron ##
+## Cron Addon ##
 
     $ heroku ps --app cron
-    Process       State               Command
-    ------------  ------------------  --------------------------------------------------
-    exec.1        up for 19h          rake resque:work QUEUE=exec
-    exec.2        up for 19h          rake resque:work QUEUE=exec
-    finder.1      up for 19h          rake resque:work QUEUES=scheduled,missed
-    finder.2      up for 18h          rake resque:work QUEUES=scheduled,missed
-    scheduler.1   up for 19h          rake resque:scheduler
-    web.1         up for 19h          bundle exec unicorn -p $PORT -c ./unicorn.conf.rb
-    web.2         up for 19h          bundle exec unicorn -p $PORT -c ./unicorn.conf.rb
-
-!SLIDE
-# Heroku Self-Hosting: Heroic #
-* PGBackups
-* postgres.heroku.com
-* Manages entire Database Cloud from heroku apps
+    Process       State        Command
+    ------------  ---------  --------------------------------------------------
+    exec.1        up for 9d  rake resque:work QUEUE=exec
+    exec.2        up for 9d  rake resque:work QUEUE=exec
+    finder.1      up for 9d  rake resque:work QUEUES=scheduled,missed
+    finder.2      up for 8d  rake resque:work QUEUES=scheduled,missed
+    scheduler.1   up for 9d  rake resque:scheduler
+    web.1         up for 9d  bundle exec unicorn -p $PORT -c ./unicorn.conf.rb
+    web.2         up for 9d  bundle exec unicorn -p $PORT -c ./unicorn.conf.rb
 
 <p class="notes">
-TODO: postgres.heroku.com image
+Addons split off from API too. Cron built using addons APIs.
+</p>
+
+!SLIDE smbullets center
+# Heroku Self-Hosting: Heroic #
+## Database Cloud Built with Heroku Apps #
+## Shogun / PGBackups ##
+![Heroku PostgreSQL](postgres.png "Heroku PostgreSQL")
+
+<p class="notes">
+postgres.heroku.com too
 </p>
 
 !SLIDE
 # Heroku Self-Hosting: Legendary? #
 
+<p class="notes">
+Halo difficulty levels
+</p>
+
 !SLIDE center
-# Architecture #
+# Heroku Architecture #
 ![Heroku Black Box Architecture](Heroku Black Box.png "Heroku Black Box Architecture")
 
 !SLIDE center
 # Self-Hosted Architecture #
 ![Compile / Runtime](Compile To Runtime.png "Compile To Runtime")
 
-!SLIDE
+<p class="notes">
+Compiling in a dyno remind you of the LLVM demo?
+</p>
+
+!SLIDE bullets
 # Motivations #
 * Dogfooding
 * Efficiency
@@ -76,10 +95,25 @@ Same bullets as public.heroku.com. Pattern?
 </p>
 
 !SLIDE
+# Disregard Servers #
+
+!SLIDE
+# Disregard Servers, #
+# Acquire Dynos #
+
+!SLIDE
+# Disregard Servers, #
+# Acquire Dynos, #
+# Not Just for Rails Apps #
+
+!SLIDE smbullets
 # Operations #
-* Heroku proves servers suck
-* Git push heroku master deploys
-* heroku logs --tail logging
+* git push heroku master deploys
+* secure containers
+* ephemeral containers
+* effortless scaling
+* addons
+* logging
 
 !SLIDE center
 # What Else? #

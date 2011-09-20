@@ -1,21 +1,33 @@
-!SLIDE title-slide bullets
+!SLIDE title-slide
 # Bootstrapping, 19th Cent. #
+## To raise or better oneself by one's own unaided efforts, in a ludicrously far-fetched or quixotic manner ##
 
-* To raise or better oneself by one's own unaided efforts, in a ludicrously far-fetched or quixotic manner
+<p class="notes">
+Talk is about "bootstrap" and "self-hosting" metaphors. Originally meant something impossible.
+</p>
 
 !SLIDE center
-![Baron Munchausen](BaronMunch.jpg "Baron Munchausen")
+![Baron Münchhausen](BaronMunch.jpg "Baron Münchhausen")
+Baron Münchhausen
 
 !SLIDE bullets
 # Bootstrapping, 20th Cent. #
-* A self-sustaining process that proceeds without external help
+## A self-sustaining process that proceeds without external help ##
+
+<p class="notes">
+In early 1900s America, morphed into something possible
+</p>
 
 !SLIDE bullets incremental
 # Bootstrapping Applications #
-* Socio-economics
+* Socio-Economics
 * Business
 * Statistics
 * Linguistics
+
+<p class="notes">
+The American dream; company without VC; sampling with replacement; acquiring language
+</p>
 
 !SLIDE smbullets
 # Biology #
@@ -25,32 +37,39 @@ Different cells receive different combinations of chemicals, which switch on dif
 
 Richard Dawkins, <i>River Out of Eden</i>
 
-!SLIDE
+!SLIDE bullets
 # Computers #
 
-* Part of "booting" a computer (1953)
+* "Booting" a computer is a derivation
 * Main memory starts in a blank slate
 * Small program (BIOS) inits hardware
 * Loads a program from hard drive
 * Passes control to bigger program (OS)
 
-!SLIDE
-# Compilers #
-* Writing a compiler in the language it compiles
+<p class="notes">
+Booting circa 1953. Some computers had a "bootstrap" button
+</p>
 
 !SLIDE
+# Compilers #
+## Writing a compiler in the language it compiles ##
+
+!SLIDE bullets
 # Advantages #
 * Non-trivial test of the language being compiled
 * Development can occur in a higher-level language
 * Comprehensive consistency check
 
-!SLIDE
+!SLIDE bullets
 # Demo: LLVM / clang #
 * LLVM compiler infrastructure
 * clang C / C++, Objective C / C++ frontend
 * Written in C++
-* Sponsored/used by Apple
 * BSD license
+
+<p class="notes">
+Sponsored/used by Apple
+</p>
 
 !SLIDE code smaller
     @@@ sh
@@ -119,6 +138,10 @@ Richard Dawkins, <i>River Out of Eden</i>
       Unsupported Tests  : 1
     real  0m57.331s
 
+<p class="notes">
+Try live demo: `heroku run bin/llvm.sh --app stloop`
+</p>
+
 !SLIDE commandline
     $ heroku run bin/llvm.sh
     + wc
@@ -133,11 +156,19 @@ Richard Dawkins, <i>River Out of Eden</i>
     ++ strings /tmp/stage3/Release/bin/clang
          12      18     178
 
-!SLIDE
-# Self-hosting #
-* Bootstrap clang with GCC
+<p class="notes">
+Stage 2 is sufficient, but building stage 3 is a consistency test
+</p>
+
+!SLIDE bullets
+# Bootstrap → Self-Hosting #
+* Bootstrap LLVM/clang with GCC
 * Compile clang with clang
 * Clang is <b>self-hosting</b>!
+
+<p class="notes">
+Need to trust GCC. Ken Thompson - Reflections on Trusting Trust, 1984
+</p>
 
 !SLIDE center
 ![Drawing Hands](handrawb.jpg "Drawing Hands")
