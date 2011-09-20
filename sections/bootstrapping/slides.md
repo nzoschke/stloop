@@ -24,48 +24,38 @@ In early 1900s America, morphed into something possible
 * Business
 * Statistics
 * Linguistics
+* Biology
+* Computers
 
 <p class="notes">
-The American dream; company without VC; sampling with replacement; acquiring language
-</p>
-
-!SLIDE smbullets
-# Biology #
-<blockquote>
-Different cells receive different combinations of chemicals, which switch on different combinations of genes, and some genes work to switch other genes on or off. And so the bootstrapping continues, until we have the full repertoire of different kinds of cells.
-</blockquote>
-
-Richard Dawkins, <i>River Out of Eden</i>
-
-!SLIDE bullets
-# Computers #
-
-* "Booting" a computer is a derivation
-* Main memory starts in a blank slate
-* Small program (BIOS) inits hardware
-* Loads a program from hard drive
-* Passes control to bigger program (OS)
-
-<p class="notes">
-Booting circa 1953. Some computers had a "bootstrap" button
+The American dream; company without VC; sampling with replacement; acquiring language; "boot" button
 </p>
 
 !SLIDE
 # Compilers #
-## Writing a compiler in the language it compiles ##
+## Writing a Compiler in the Language it Compiles ##
+## Leads to a Self-Hosting Compiler ##
 
 !SLIDE bullets
 # Advantages #
-* Non-trivial test of the language being compiled
-* Development can occur in a higher-level language
-* Comprehensive consistency check
+* Non-trivial Test of the Language Being Compiled
+* Development Can Occur in a Higher-Level Language
+* Comprehensive Consistency Check
+
+!SLIDE bullets
+# Chicken and Egg #
+* Build Compiler/Interpreter for X in Y
+* Use an Existing Compiler for X'
+* Use an Earlier Version With a Subset of X
+* Hand Compile
 
 !SLIDE bullets
 # Demo: LLVM / clang #
-* LLVM compiler infrastructure
-* clang C / C++, Objective C / C++ frontend
+* LLVM Compiler Infrastructure
+* Research Project at UIUC in 2000
+* Clang C / C++, Objective C / C++ Frontend
 * Written in C++
-* BSD license
+* BSD License
 
 <p class="notes">
 Sponsored/used by Apple
@@ -157,14 +147,14 @@ Try live demo: `heroku run bin/llvm.sh --app stloop`
          12      18     178
 
 <p class="notes">
-Stage 2 is sufficient, but building stage 3 is a consistency test
+Stage 2 is sufficient, but building stage 3 is a great test
 </p>
 
 !SLIDE bullets
 # Bootstrap → Self-Hosting #
-* Bootstrap LLVM/clang with GCC
-* Compile clang with clang
-* Clang is <b>self-hosting</b>!
+* Bootstrap LLVM/Clang with GCC
+* Compile Clang Cith Clang
+* Clang is <b>Self-Hosting</b>!
 
 <p class="notes">
 Need to trust GCC. Ken Thompson - Reflections on Trusting Trust, 1984
@@ -172,4 +162,4 @@ Need to trust GCC. Ken Thompson - Reflections on Trusting Trust, 1984
 
 !SLIDE center
 ![Drawing Hands](handrawb.jpg "Drawing Hands")
-(bootstrap hands not pictured)
+(Bootstrap hands not pictured)

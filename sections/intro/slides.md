@@ -10,9 +10,9 @@
 # Heroku Background #
 
 * Cloud Application Platform as a Service
-* Run anything and see everything without servers 
+* Run Anything and See Everything Without Servers 
 * Distributed Unix
 
 <p class="notes">
-Used to be "Ruby" App platform. Now Node.js, Clojure, JVM.
+Used to be "Ruby" App platform. Now Node.js, Clojure, Java. Today we're talking about the metaphor of bootstrapping and self-hosting.
 </p>

@@ -30,7 +30,6 @@ Service != computer program, but is a comparable system
 Many google hits for "self-hosting" wordpress
 </p>
 
-
 !SLIDE bullets
 # Motivations #
 * Dogfooding
@@ -101,16 +100,16 @@ Compiling in a dyno remind you of the LLVM demo?
 * Separation of Concerns
 
 <p class="notes">
-Same bullets as public.heroku.com. Pattern?
+Same bullets as public.heroku.com. Pattern? Efficiency also uses CPU cycles.
 </p>
 
 
 !SLIDE bullets
 # Motivations #
+* Effortless Scaling
 * Decrease Surface Area
 * Build/Compile Symmetry
 * Secure, Ephemeral Containers
-* Effortless Scaling
 
 <p class="notes">
 Total ops win: more secure, non-priveledged deploys, kills server class.
@@ -125,7 +124,7 @@ Disregard servers, acquire dynos. Not just for rails apps.
     @@@ sh
     #!/usr/bin/env bash
 
-    SRC_DIR=${1:-.}
+    SRC_DIR=1
     TMP_DIR=$(mktemp -d /tmp/t.XXXXX)
     BUILD_DIR=$TMP_DIR/app
 
@@ -158,7 +157,6 @@ Disregard servers, acquire dynos. Not just for rails apps.
     $ heroku run bin/compile .
     Running bin/compile . attached to terminal... up, run.13
     -----> Heroku receiving push
-    -----> Updating language pack...
     -----> Ruby/Rack app detected
     -----> Installing bundler using ruby 1.9.2p180 and gem 1.3.7...
     -----> Installing dependencies using Bundler version 1.1.pre.9
@@ -207,4 +205,3 @@ Message Bus (rabbitmq, redis) Process
 <p class="notes">
 Ouroboros. Cascading Global Failure. Engineering challenges and puzzles, not the end of the world
 </p>
-
