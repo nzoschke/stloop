@@ -16,6 +16,7 @@ set -eo pipefail
 # -----> Launching... done, v2
 #        http://radiant-planet-875.herokuapp.com deployed to Heroku
 
+SRC_DIR=$1
 TMP_DIR=$(mktemp -d /tmp/app.XXXXX)
 BUILD_DIR=$TMP_DIR/app
 
@@ -26,17 +27,17 @@ export LOG_TAG=t.a7bd5f2b-1943-465a-8abe-6278edd204ea[slugc]
 
 topic()   { echo "----->" $*; }
 err()     { echo " !    " $*; }
+log()     { logger -t $LOG_TAG; }
 
 trap "rm -rf $TMP_DIR" EXIT
 
 topic Heroku receiving push
-mkdir -p $BUILD_DIR
-cp -R $1 $BUILD_DIR/
-rm -rf $BUILD_DIR/vendor
-rm -rf $BUILD_DIR/.bundle
+bin/rsync -avz                                          \
+  --exclude vendor/ --exclude .bundle/ --exclude .git/  \
+  $SRC_DIR $BUILD_DIR/ | log
 
 topic Updating language pack...
-git clone git://gist.github.com/1210141.git $TMP_DIR/lp 2>&1 | logger -t $LOG_TAG
+git clone git://gist.github.com/1210141.git $TMP_DIR/lp 2>&1 | log
 
 # compile app in a clean environment
 env -i                        \
@@ -51,7 +52,7 @@ env -i $TMP_DIR/lp/bin/release $TMP_DIR/app > $TMP_DIR/release.yml
 [ -f $BUILD_DIR/Procfile ] && cat $BUILD_DIR/Procfile | sed "s/^/  /" >> $TMP_DIR/release.yml
 
 # squash
-mksquashfs $BUILD_DIR $TMP_DIR/slug.img -no-progress -all-root 2>&1 | logger -t $LOG_TAG
+mksquashfs $BUILD_DIR $TMP_DIR/slug.img -no-progress -all-root 2>&1 | log
 topic Compiled slug is $(du -h $TMP_DIR/slug.img | cut -f1-1)
 
 # push
