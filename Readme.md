@@ -1,3 +1,9 @@
+Bootstrap heroku
+  locally "compile" a pure-ruby app (rackup/webrick)
+  push to heroku
+
+---
+
 Part 0  -- Intro
   Running Heroku on Heroku
   Noah Zoschke
@@ -12,7 +18,6 @@ Part I  -- Bootstrapping
 
     "a self-sustaining process that proceeds without external help"
 
-    http://twitter.github.com/bootstrap/
     Business: to build a profitable company without receiving funding
     Statistics: resampling, sampling with replacement
     Biology: "Different cells receive different combinations of chemicals, which switch on different combinations of genes, and some genes work to switch other genes on or off. And so the bootstrapping continues, until we have the full repertoire of different kinds of cells." - Dawkins
@@ -26,7 +31,7 @@ Part I  -- Bootstrapping
 
     http://books.google.com/books?id=yUIUAAAAYAAJ&pg=PA709&lpg=PA709&dq=%22The+attempt+of+the+mind+to+analyze+itself+an+effort+analogous+to+one+who+would+lift+himself+by+his+own+bootstraps.%22&source=bl&ots=fiZz8HPF6y&sig=u8pQCj3H3YdITFQeDgr5jva3F4g&hl=en&ei=tNNrTtSmAZHSiAKhqc3MDg&sa=X&oi=book_result&ct=result&resnum=1&ved=0CBYQ6AEwAA#v=onepage&q=%22The%20attempt%20of%20the%20mind%20to%20analyze%20itself%20an%20effort%20analogous%20to%20one%20who%20would%20lift%20himself%20by%20his%20own%20bootstraps.%22&f=false
 
-    We have for some time shared Mr. Carlyle's prejudice against metaphysics, seeing in the attempt of the mind to analyze itself an effort analogous to one who would lift himself by his own bootstraps, or a repitition of the story of St. Patric, who when swimming a stream to escape his enemies, and finding their arrows whizzing about his head, did, as is well known, take off his head and hold it in his teeth until he was out of danger. Metaphysics is holding the mind in the mental teeth.
+    We have for some time shared Mr. Carlyle's prejudice against metaphysics, seeing in the attempt of the mind to analyze itself an effort analogous to one who would lift himself by his own bootstraps, or a repitition of the story of St. Patrick, who when swimming a stream to escape his enemies, and finding their arrows whizzing about his head, did, as is well known, take off his head and hold it in his teeth until he was out of danger. Metaphysics is holding the mind in the mental teeth.
 
     Lectures on Logic
     Sir William Hamilton
@@ -174,7 +179,7 @@ Part III -- Heroku
 
   Exercise
     Q: AWS Primatives?
-    A: S3
+    A: S3 - level 0 service
 
   Uh oh...
 
