@@ -16,7 +16,7 @@ set -eo pipefail
 # -----> Launching... done, v2
 #        http://radiant-planet-875.herokuapp.com deployed to Heroku
 
-SRC_DIR=$1
+SRC_DIR=${1:-.}
 TMP_DIR=$(mktemp -d /tmp/app.XXXXX)
 BUILD_DIR=$TMP_DIR/app
 
