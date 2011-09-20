@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -exo pipefail
+set -eo pipefail
 
 # -----> Heroku receiving push
 # -----> Updating alpha language packs... done
@@ -32,6 +32,8 @@ trap "rm -rf $TMP_DIR" EXIT
 topic Heroku receiving push
 mkdir -p $BUILD_DIR
 cp -R $1 $BUILD_DIR/
+rm -rf $BUILD_DIR/vendor
+rm -rf $BUILD_DIR/.bundle
 
 topic Updating language pack...
 git clone git://gist.github.com/1210141.git $TMP_DIR/lp 2>&1 | logger -t $LOG_TAG
