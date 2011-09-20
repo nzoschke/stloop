@@ -1,4 +1,4 @@
-!SLIDE title-slide bullets incremental
+!SLIDE title-slide smbullets incremental
 # Self-Hosting #
 ## A computer program that produces new versions of that same program ##
 
@@ -15,13 +15,21 @@ FASM; Haiku; GCC; Hart/Levin Lisp in '62; PyPy; Rubinius; CoffeeScript; Git; VIM
 !SLIDE title-slide bullets
 # Self-Hosting #
 ## Applicable Metaphor for Services? ##
-<p class="notes">Service != computer program, but is a comparable system</p>
+
+<p class="notes">
+Service != computer program, but is a comparable system
+</p>
 
 !SLIDE center
 # Heroku Self-Hosting: Easy #
 ## www.heroku.com ##
 ## blog.heroku.com ##
 ![Heroku Website](public.png "Heroku Website")
+
+<p class="notes">
+Many google hits for "self-hosting" wordpress
+</p>
+
 
 !SLIDE bullets
 # Motivations #
@@ -74,6 +82,10 @@ Halo difficulty levels
 # Heroku Architecture #
 ![Heroku Black Box Architecture](Heroku Black Box.png "Heroku Black Box Architecture")
 
+<p class="notes">
+Runtime is the guts of heroku. Database is important too, not pictured.
+</p>
+
 !SLIDE center
 # Self-Hosted Architecture #
 ![Compile / Runtime](Compile To Runtime.png "Compile To Runtime")
@@ -86,34 +98,94 @@ Compiling in a dyno remind you of the LLVM demo?
 # Motivations #
 * Dogfooding
 * Efficiency
-* Decrease surface area
-* Separation of concerns
+* Separation of Concerns
 
 <p class="notes">
-Less surface area == more secure
 Same bullets as public.heroku.com. Pattern?
 </p>
 
-!SLIDE
-# Disregard Servers #
+
+!SLIDE bullets
+# Motivations #
+* Decrease Surface Area
+* Build/Compile Symmetry
+* Secure, Ephemeral Containers
+* Effortless Scaling
+
+<p class="notes">
+Total ops win: more secure, non-priveledged deploys, kills server class.
+Disregard servers, acquire dynos. Not just for rails apps.
+</p>
 
 !SLIDE
-# Disregard Servers, #
-# Acquire Dynos #
+# Demo: Slug Compile #
+## Bundle Code for the Heroku Runtime #
 
-!SLIDE
-# Disregard Servers, #
-# Acquire Dynos, #
-# Not Just for Rails Apps #
+!SLIDE code smaller
+    @@@ sh
+    #!/usr/bin/env bash
 
-!SLIDE smbullets
-# Operations #
-* git push heroku master deploys
-* secure containers
-* ephemeral containers
-* effortless scaling
-* addons
-* logging
+    SRC_DIR=${1:-.}
+    TMP_DIR=$(mktemp -d /tmp/t.XXXXX)
+    BUILD_DIR=$TMP_DIR/app
+
+    trap "rm -rf $TMP_DIR" EXIT
+
+    # Copy src to build dir
+    bin/rsync -avz                                          \
+      --exclude vendor/ --exclude .bundle/ --exclude .git/  \
+      $SRC_DIR $BUILD_DIR/ 2>&1 | log
+
+    # Bundle with a clean env
+    (
+      export GEM_HOME=vendor/bundle/ruby/1.9.1
+      export HOME=$BUILD_DIR
+      export PATH=$GEM_HOME/bin:/usr/local/bin:/usr/bin:/bin
+
+      gem install bundler --pre --no-rdoc --no-ri 2>&1 | log
+      bundle install --without development:test --deployment
+    )
+
+    [ $? -ne 0 ] && { 
+      echo Heroku push rejected, failed to compile app; exit 1;
+    }
+
+    # Squash
+    mksquashfs $BUILD_DIR $TMP_DIR/slug.img -no-progress -all-root 2>&1 | log
+    echo Compiled slug is $(du -h $TMP_DIR/slug.img | cut -f1-1)
+
+!SLIDE commandline smaller
+    $ heroku run bin/compile .
+    Running bin/compile . attached to terminal... up, run.13
+    -----> Heroku receiving push
+    -----> Updating language pack...
+    -----> Ruby/Rack app detected
+    -----> Installing bundler using ruby 1.9.2p180 and gem 1.3.7...
+    -----> Installing dependencies using Bundler version 1.1.pre.9
+           Running: bundle install --without development:test --deployment
+           Fetching dependency information from the API at http://rubygems.org/......
+           Installing addressable (2.2.6) 
+           Installing blankslate (2.1.2.4) 
+           Installing bluecloth (2.1.0) with native extensions 
+           Installing gli (1.3.3) 
+           Installing launchy (2.0.5) 
+           Installing mime-types (1.16) 
+           Installing rest-client (1.6.3) 
+           Installing term-ansicolor (1.0.6) 
+           Installing heroku (2.5.0) 
+           Installing json (1.6.0) with native extensions 
+           Installing kgio (2.0.0) with native extensions 
+           Installing nokogiri (1.5.0) with native extensions 
+           Installing parslet (1.2.1) 
+           Installing rack (1.3.2) 
+           Installing tilt (1.3.3) 
+           Installing sinatra (1.2.6) 
+           Installing showoff (0.7.0) 
+           Installing unicorn (3.0.0) with native extensions 
+           Using bundler (1.1.pre.9) 
+           Your bundle is complete! It was installed into ./vendor/bundle
+           Cleaning up the bundler cache
+    -----> Compiled slug is 13M
 
 !SLIDE center
 # What Else? #
@@ -126,78 +198,13 @@ DB (postgres) Process
 Message Bus (rabbitmq, redis) Process
 </p>
 
-!SLIDE
+!SLIDE center smbullets
 # Challenges #
 * Circular Dependencies
+* CGFs
+![Spirals](ouroboros.png "Spirals")
 
-!SLIDE commandline
-# Runtime Primatives #
-## Processes ##
-    $ heroku help ps
-    Usage: heroku ps
+<p class="notes">
+Ouroboros. Cascading Global Failure. Engineering challenges and puzzles, not the end of the world
+</p>
 
-     list processes for an app
-
-    Additional commands, type "heroku help COMMAND" for more details:
-
-      ps:scale PROCESS1=AMOUNT1 ...  # scale processes by the given amount
-      ps:restart [PROCESS]           # restart an app process
-      ps:run COMMAND                 # run an attached process
-      ps:kill [SIGNAL] PROCESS       # send a signal to an app process
-
-!SLIDE commandline
-# Runtime Primatives #
-## Releases ##
-    $ heroku help releases
-    Usage: heroku releases
-
-     list releases
-
-    Additional commands, type "heroku help COMMAND" for more details:
-
-      releases:info RELEASE  # view detailed information for a release
-      rollback [RELEASE]     # roll back to an older release
-
-
-!SLIDE
-* Codon - Compiles in a heroku app
-* Performs slug compiles in a heroku app
-
-Primatives
-Circular dependencies
-CGF
-
-!SLIDE
-* PSMgr
-* API
-
-!SLIDE smbullets
-# Definition #
-kernels, assemblers, shells, revision control software
-Lets add "platform" to that list!
-Self-hosting to services -- different but related problem
-
-!SLIDE smbullets
-# Simple Examples #
-heroku.com - public.heroku.com heroku app
-blog.heroku.com - 
-addons.heroku.com - API access this on boot
-pgbackups
-ion
-
-!SLIDE smbullets
-# More Examples #
-shogun - database service that hosts its own database
-codon - 
-psmgr - Manages processes and manages itself. 2 running bootstrap
-local psmgr
-  bootstrap 1st heroku app
-  use tht to run 2nd heroku app
-
-!SLIDE smbullets
-# service bootstrapping #
-Infrastructure cloud
-
-!SLIDE smbullets
-# Holy Grail #
-Everything on runtime.

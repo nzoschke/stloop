@@ -3,7 +3,7 @@
 ## To raise or better oneself by one's own unaided efforts, in a ludicrously far-fetched or quixotic manner ##
 
 <p class="notes">
-Talk is about "bootstrap" and "self-hosting" metaphors. Originally meant something impossible.
+Talk is about "bootstrap" and "self-hosting" metaphors. Originally meant something impossible like perpetual motion machines.
 </p>
 
 !SLIDE center
