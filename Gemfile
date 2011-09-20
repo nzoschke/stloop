@@ -4,3 +4,5 @@ gem 'nokogiri'
 gem 'showoff'
 gem 'gli'
 gem 'heroku'
+
+gem "pdfkit"
